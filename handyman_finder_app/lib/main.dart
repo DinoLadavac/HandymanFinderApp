@@ -6,10 +6,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: "Enter apiKey",
-          appId: "Enter Appid",
-          messagingSenderId: "Enter messagingSenderId",
-          projectId: "enter projectId"));
+          apiKey: "AIzaSyADW311E5Byw5an3kPBT9c2gTVdKF3sKSA",
+          appId: "1:828100715380:web:8e90937dea7e19fa79c221",
+          messagingSenderId: "828100715380",
+          projectId: "handymanfinderapp-dlzr"));
   runApp(MyApp());
 }
 
