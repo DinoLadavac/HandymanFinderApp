@@ -38,7 +38,8 @@ class MainPage extends StatelessWidget {
         ],
       ),
       body: Center(
-          child: Column(
+          child: SingleChildScrollView(
+              child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -111,7 +112,7 @@ class MainPage extends StatelessWidget {
             child: const Text("Carpenter", style: TextStyle(fontSize: 20)),
           ),
         ],
-      )),
+      ))),
       bottomNavigationBar: BottomAppBar(
           color: const Color.fromARGB(255, 47, 45, 45),
           child: Row(

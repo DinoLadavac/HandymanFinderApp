@@ -7,6 +7,7 @@ import 'package:handyman_finder_app/requestDetailPage.dart';
 import 'login.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
+import 'HandymanHistoryPage.dart';
 
 class HandymanMainPage extends StatelessWidget {
   final String username;
@@ -68,6 +69,7 @@ class HandymanMainPage extends StatelessWidget {
       body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection('requests')
+              .where('handyman', isNull: true)
               .where('accepted', isEqualTo: false)
               .orderBy('date_time', descending: true)
               .snapshots(),
@@ -158,6 +160,23 @@ class HandymanMainPage extends StatelessWidget {
               },
             );
           }),
+      bottomNavigationBar: BottomAppBar(
+          color: const Color.fromARGB(255, 47, 45, 45),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => HandymanHistoryPage(
+                                  username: username,
+                                )));
+                  },
+                  icon: const Icon(Icons.history, color: Colors.white))
+            ],
+          )),
     );
   }
 }

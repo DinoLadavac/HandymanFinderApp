@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:handyman_finder_app/ConfirmationHandyman.dart';
+import 'package:handyman_finder_app/HandymanMainPage.dart';
 // ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
@@ -68,11 +68,11 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
                       onPressed: () {
                         updateRequest(
                             context, pph, fee, descOfFee, widget.username);
-                        Navigator.push(
+                        Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ConfirmationHandymanPage(
-                                      requestData: widget.requestData,
+                                builder: (context) => HandymanMainPage(
+                                      username: widget.username,
                                     )));
                       },
                       style: ElevatedButton.styleFrom(
@@ -104,7 +104,6 @@ class _RequestDetailPageState extends State<RequestDetailPage> {
           .collection('requests')
           .doc(widget.requestData.id)
           .update({
-        'accepted': true,
         'price_per_hour': pph.text,
         'fee': fee.text,
         'description_of_fee': desc.text,

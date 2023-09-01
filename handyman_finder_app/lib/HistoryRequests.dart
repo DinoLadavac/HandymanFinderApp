@@ -55,8 +55,10 @@ class _HistoryRequestPageState extends State<HistoryRequestPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>
-                                      ConfirmationPage(requestData: request)));
+                                  builder: (context) => ConfirmationPage(
+                                        requestData: request,
+                                        username: widget.username,
+                                      )));
                         },
                         child: Card(
                             elevation: 2,
@@ -90,18 +92,25 @@ class _HistoryRequestPageState extends State<HistoryRequestPage> {
                                           'Date: $formattedDate',
                                           style: const TextStyle(fontSize: 12),
                                         ),
-                                        if (!request['accepted'])
+                                        if (request['accepted'])
+                                          Text(
+                                              "You accepted ${request["handyman"]}'s service",
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  color: Color.fromARGB(
+                                                      255, 232, 20, 5)))
+                                        else if (request['handyman'] == null)
                                           const Text("Pending",
                                               style: TextStyle(
                                                 fontSize: 12,
                                               ))
                                         else
                                           Text(
-                                              "Accepted by ${request["handyman"]}",
+                                              "Price Requested by ${request["handyman"]}",
                                               style: const TextStyle(
                                                   fontSize: 12,
                                                   color: Color.fromARGB(
-                                                      255, 232, 20, 5))),
+                                                      255, 251, 92, 18))),
                                         ElevatedButton(
                                             onPressed: () {
                                               FirebaseFirestore.instance

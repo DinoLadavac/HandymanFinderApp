@@ -8,8 +8,10 @@ import 'package:intl/intl.dart';
 
 class ConfirmationPage extends StatelessWidget {
   final QueryDocumentSnapshot<Object?> requestData;
+  final String username;
 
-  const ConfirmationPage({required this.requestData, super.key});
+  const ConfirmationPage(
+      {required this.requestData, required this.username, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -90,6 +92,20 @@ class ConfirmationPage extends StatelessWidget {
             Text("Description of fee: ${requestData["description_of_fee"]}",
                 style: const TextStyle(fontSize: 12)),
             const SizedBox(height: 20.0),
+            if (requestData['author'] == username &&
+                requestData['handyman'] != null &&
+                requestData['accepted'] == false)
+              Center(
+                  child: ElevatedButton(
+                      onPressed: () {
+                        AcceptRequest(requestData.id, context);
+                        Navigator.pop(context);
+                      },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 47, 45, 45)),
+                      child: const Text("Accept price"))),
+            const SizedBox(height: 5.0),
             Center(
                 child: ElevatedButton(
                     onPressed: () {
@@ -124,6 +140,24 @@ class ConfirmationPage extends StatelessWidget {
         backgroundColor: Colors.red,
       ));
     }
+  }
+}
+
+Future<void> AcceptRequest(String requestID, BuildContext context) async {
+  try {
+    await FirebaseFirestore.instance
+        .collection("requests")
+        .doc(requestID)
+        .update({
+      "accepted": true,
+    });
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("Error --> $e",
+          style: const TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold)),
+      backgroundColor: Colors.red,
+    ));
   }
 }
 
